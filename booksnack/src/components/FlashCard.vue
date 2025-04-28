@@ -20,6 +20,12 @@
 
 </script>
 <template>
+    <div class="maincontainer">
+        <div class="card">
+            <div class="thefront">front of card</div>
+            <div class="theback">back of card</div>
+        </div>
+    </div>
     <div class="flex m-auto p-4 justify-center items-center m-h-screen">
         <div class="flex justify-center bg-red-300 items-center m-2 w-[50%] h-150 p-4 border border-red-100 rounded-md shadow-xl">
             <div class="flex justify-center items-center">
@@ -49,4 +55,40 @@
 
 </template>
 <style>
+    .maincontainer{
+        position:relative;
+        width: 250px;
+        height: 320px;
+    }
+
+    .card{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style:preserve-3d;
+        transition: all 0.5s ease;
+    }
+
+    .card:hover{
+        transform: rotateY(180deg);
+    }
+
+    .thefront{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: teal;
+        color: burlywood;
+    }
+
+    .theback{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: tomato;
+        color: cornsilk;
+        transform: rotateY(180deg)
+    }
 </style>
