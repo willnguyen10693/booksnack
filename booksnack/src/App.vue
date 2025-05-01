@@ -1,12 +1,11 @@
 <script setup>
 import Header from '@/components/Header.vue';
-import FlashCard from '@/components/FlashCard.vue'
 </script>
 
 <template>
   <Header/>
-  <main>
-    <FlashCard/>
+  <main class="p-4">
+    <router-view />
   </main>
 </template>
 
