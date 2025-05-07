@@ -5,6 +5,11 @@
     import 'aos/dist/aos.css';
     import { gsap } from "gsap";
 
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
     const contents = ref([
         {
             frontCardctx: "1. Personal Vision",
@@ -65,41 +70,42 @@
 
     onMounted(() => {
         AOS.init();
-        gsap.to(".box", { rotation: 12, x: 100, duration:10 });
     });
 </script>
 <template>
-    <div class="flex flex-col md:flex-row m-auto p-4 justify-center items-center h-min">
-        <div class="flex justify-center bg-red-300 items-center m-2 w-full md:w-1/2 h-150 p-4 border border-red-100 rounded-md shadow-xl">
-            <div class="flex justify-center items-center">
-                <img class="max-w-full max-h-full" :src="endPro" alt="The End of Procrastination Book Cover">
-            </div>
-        </div>       
-    </div>
-
-    <div class="flex flex-col md:flex-row m-auto p-4 justify-center h-min">
-        <div class="m-2 w-full md:w-1/2 h-auto p-4 bg-red-100 border border-red-50 rounded-md shadow-lg">
-            <div class="text-gray-800 text-sm leading-relaxed">
-                <strong>*The End of Procrastination*</strong> by Petr Ludwig and Adela Schicker helps readers fight procrastination using science-based tools and practical strategies. Instead of relying on willpower, it emphasizes motivation through meaningful goals, structured habits, and emotional self-management. The book combines insights from neuroscience and psychology to help people become more focused, efficient, and fulfilled.
-            </div>
-        </div>       
-    </div>
-    <div class="box flex flex-wrap justify-center gap-4 p-4">
-        <div v-for="(content, index) in contents" :key="index">
-            <div class="maincontainer w-72 h-48 cursor-pointer" @click="toggleFlip(index)">
-                <div class="card bg-red-50 w-full h-full border border-red-200 rounded-md shadow-md" :class="{flipped: content.flipped}">
-                    <div class="thefront flex items-center justify-center p-2 text-center font-semibold">
-                        {{ content.frontCardctx }}
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <div class="flex flex-col md:flex-row m-auto p-4 justify-center items-center h-min">
+                <div class="flex justify-center bg-red-300 items-center m-2 w-full md:w-1/2 h-150 p-4 border border-red-100 rounded-md shadow-xl">
+                    <div class="flex justify-center items-center">
+                        <img class="max-w-full max-h-full" :src="endPro" alt="The End of Procrastination Book Cover">
                     </div>
-                    <div class="theback flex items-center justify-center p-2 text-center text-sm text-gray-700">
-                        {{ content.backCardctx }}
+                </div>       
+            </div>
+
+            <div class="flex flex-col md:flex-row m-auto p-4 justify-center h-min">
+                <div class="m-2 w-full md:w-1/2 h-auto p-4 bg-red-100 border border-red-50 rounded-md shadow-lg">
+                    <div class="text-gray-800 text-sm leading-relaxed">
+                        <strong>*The End of Procrastination*</strong> by Petr Ludwig and Adela Schicker helps readers fight procrastination using science-based tools and practical strategies. Instead of relying on willpower, it emphasizes motivation through meaningful goals, structured habits, and emotional self-management. The book combines insights from neuroscience and psychology to help people become more focused, efficient, and fulfilled.
+                    </div>
+                </div>       
+            </div>
+            <div class="flex w-full flex-wrap justify-center gap-4 p-4">
+                <div v-for="(content, index) in contents" :key="index" data-aos="fade-up">
+                    <div class="maincontainer m-2 p-6 w-[350px] h-[250px] cursor-pointer" @click="toggleFlip(index)">
+                        <div class="card bg-red-50 w-full h-full border border-red-200 rounded-md shadow-md" :class="{flipped: content.flipped}">
+                            <div class="thefront flex items-center justify-center p-2 text-center font-semibold">
+                                {{ content.frontCardctx }}
+                            </div>
+                            <div class="theback flex items-center justify-center p-2 text-center text-sm text-gray-700">
+                                {{ content.backCardctx }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
-
 </template>
 <style>
     *{
@@ -114,10 +120,10 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        transform-style:preserve-3d;
-        transition: all 2s ease, box-shadow 1s ease;
-        cursor: pointer;
-        border-radius: 10px;
+        transform-style: preserve-3d;
+        transition: all 0.8s ease;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .card.flipped{
@@ -125,9 +131,7 @@
     }
 
     .card:hover{
-        box-shadow: 0 0 10px 2px purple;
-        animation: borderGrow 2s infinite alternate linear;
-        transition: all 0.5s ease-in-out;
+        box-shadow: 0 0 20px rgba(135, 206, 250, 0.8);
     }
 
     @keyframes borderGrow {
@@ -140,6 +144,16 @@
         backface-visibility: hidden;
         width: 100%;
         height: 100%;
+        background-color: #E0F7FA; /* sky blue */
+        color: #2c3e50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 16px;
+        text-align: center;
     }
 
     .theback{
@@ -147,6 +161,15 @@
         backface-visibility: hidden;
         width: 100%;
         height: 100%;
-        transform: rotateY(180deg)
+        background-color: #F3E5F5; /* light lavender */
+        color: #3c3c5a;
+        transform: rotateY(180deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        font-size: 0.95rem;
+        border-radius: 16px;
+        text-align: center;
     }
 </style>
