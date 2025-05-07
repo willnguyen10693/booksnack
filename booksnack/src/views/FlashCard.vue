@@ -10,6 +10,8 @@
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
+    var isVisible = ref(false);
+
     const contents = ref([
         {
             frontCardctx: "1. Personal Vision",
@@ -68,36 +70,52 @@
         contents.value[index].flipped = !contents.value[index].flipped;
     }
 
+    const displayCard = () => {
+        isVisible.value = !isVisible.value;        
+    }
+
     onMounted(() => {
         AOS.init();
+        gsap.from(".book-cover", {
+            opacity:0,
+            duration:1,
+            delay:0.5,
+            ease: "power1.out",
+            y: -50,
+            stagger: 0.5,
+        });
     });
 </script>
 <template>
     <div id="smooth-wrapper">
         <div id="smooth-content">
-            <div class="flex flex-col md:flex-row m-auto p-4 justify-center items-center h-min">
-                <div class="flex justify-center bg-red-300 items-center m-2 w-full md:w-1/2 h-150 p-4 border border-red-100 rounded-md shadow-xl">
+            <div class="book-cover flex flex-col m-auto p-4 justify-center items-center h-min">
+                <div class="flex justify-center bg-gray-900 items-center m-2 w-full md:w-150 h-150 p-4 border border-red-100 rounded-md shadow-xl">
                     <div class="flex justify-center items-center">
-                        <img class="max-w-full max-h-full" :src="endPro" alt="The End of Procrastination Book Cover">
+                        <img class="book-cover max-w-full max-h-full" :src="endPro" alt="The End of Procrastination Book Cover">
                     </div>
                 </div>       
             </div>
+            <div class="book-cover max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-xl">
+                <div class="flex flex-col items-center">
+                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">The End of Procrastination</h2>
+                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                            <strong>Authors:</strong> Petr Ludwig and Adela Schicker<br>
+                            This book helps readers fight procrastination using science-based tools and practical strategies. Instead of relying on willpower, it emphasizes motivation through meaningful goals, structured habits, and emotional self-management. The book combines insights from neuroscience and psychology to help people become more focused, efficient, and fulfilled.
+                        </p>
+                        <a @click="displayCard()" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Learn More</a>
+                </div>
+            </div>
+           
 
-            <div class="flex flex-col md:flex-row m-auto p-4 justify-center h-min">
-                <div class="m-2 w-full md:w-1/2 h-auto p-4 bg-red-100 border border-red-50 rounded-md shadow-lg">
-                    <div class="text-gray-800 text-sm leading-relaxed">
-                        <strong>*The End of Procrastination*</strong> by Petr Ludwig and Adela Schicker helps readers fight procrastination using science-based tools and practical strategies. Instead of relying on willpower, it emphasizes motivation through meaningful goals, structured habits, and emotional self-management. The book combines insights from neuroscience and psychology to help people become more focused, efficient, and fulfilled.
-                    </div>
-                </div>       
-            </div>
-            <div class="flex w-full flex-wrap justify-center gap-4 p-4">
+            <div v-show="isVisible" class="card-display flex w-full flex-wrap justify-center gap-4 p-4">
                 <div v-for="(content, index) in contents" :key="index" data-aos="fade-up">
-                    <div class="maincontainer m-2 p-6 w-[350px] h-[250px] cursor-pointer" @click="toggleFlip(index)">
-                        <div class="card bg-red-50 w-full h-full border border-red-200 rounded-md shadow-md" :class="{flipped: content.flipped}">
-                            <div class="thefront flex items-center justify-center p-2 text-center font-semibold">
+                    <div class="maincontainer m-2 p-6 w-[400px] h-[250px] cursor-pointer" @click="toggleFlip(index)">
+                        <div class="card w-full h-full border-x-4 border-indigo-500 rounded-lg shadow-md" :class="{flipped: content.flipped}" ref="focusCard">
+                            <div class="thefront flex items-center justify-center p-2 text-center text-xl font-semibold">
                                 {{ content.frontCardctx }}
                             </div>
-                            <div class="theback flex items-center justify-center p-2 text-center text-sm text-gray-700">
+                            <div class="theback flex items-center justify-center p-2 text-center text-xl text-gray-700">
                                 {{ content.backCardctx }}
                             </div>
                         </div>
@@ -122,8 +140,6 @@
         height: 100%;
         transform-style: preserve-3d;
         transition: all 0.8s ease;
-        border-radius: 16px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .card.flipped{
@@ -144,15 +160,12 @@
         backface-visibility: hidden;
         width: 100%;
         height: 100%;
-        background-color: #E0F7FA; /* sky blue */
         color: #2c3e50;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 1.5rem;
-        font-size: 1.1rem;
         font-weight: 600;
-        border-radius: 16px;
         text-align: center;
     }
 
@@ -161,15 +174,12 @@
         backface-visibility: hidden;
         width: 100%;
         height: 100%;
-        background-color: #F3E5F5; /* light lavender */
         color: #3c3c5a;
         transform: rotateY(180deg);
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 1.5rem;
-        font-size: 0.95rem;
-        border-radius: 16px;
         text-align: center;
     }
 </style>

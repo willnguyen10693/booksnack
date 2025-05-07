@@ -4,9 +4,9 @@ import ReadTimeTracker from '@/views/ReadTimeTracker.vue';
 import FlashCard from '@/views/FlashCard.vue';
 
 const routes = [
-    { path: '/', name: 'Home', component: Home },
+    // { path: '/', name: 'Home', component: Home },
     { path: '/readtimetracker', name: 'readtimetracker', component: ReadTimeTracker },
-    { path: '/flashcard', name: 'Flashcard', component: FlashCard},
+    { path: '/', name: 'Flashcard', component: FlashCard},
 ];
 
 
