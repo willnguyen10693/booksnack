@@ -1,43 +1,79 @@
-<script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-
-const show = ref(true); // Set to false if you want to track but not display
-const seconds = ref(0);
-const isPaused = ref(false);
-let intervalId = null;
-
-const formattedTime = computed(() => {
-  const mins = Math.floor(seconds.value / 60);
-  const secs = seconds.value % 60;
-  return `${mins}m ${secs}s`;
-});
-
-const toggleTimer = () => {
-    isPaused.value = !isPaused.value;
-}
-
-intervalId = setInterval(() => {
-    if(!isPaused.value){
-        seconds.value += 1;
-    }
-}, 1000);
-
-// onUnmounted(() => {
-//   clearInterval(intervalId);
-//   // Optionally send the data to your backend or log it
-//   console.log(`Total reading time: ${seconds.value} seconds`);
-// });
-
-
-
-</script>
 <template>
-    <div v-if="show">
-    <p class="text-sm text-gray-600">Reading time: {{ formattedTime }}</p>
+  <div class="w-300 h-160 mx-auto flex flex-row justify-center items-center box-border shadow-xl shadow-cyan-500/50 transition-all duration-2000 ease-in-out"
+      :class="[borderClass]">
+    <div class="flex flex-col justify-center items-center">
+      <span class="text-9xl"> {{ formattedTime }}</span>
+    </div>
   </div>
-  <div>
-    <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded" @click="toggleTimer">Pause</button>
+  <div class="flex flex-col p-2 w-100 h-auto mx-auto">
+      <!-- <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(0)">Start</button>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(1)">Pause</button>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(2)">Start</button>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(3)">Pause</button> -->
+      <button @click="start" :disabled="isRunning">Start</button>
+      <button @click="pause" :disabled="!isRunning">Pause</button>
+      <button @click="reset">Reset</button>
   </div>
 </template>
-<style>
+
+<script setup>
+import { ref, computed } from 'vue'
+
+
+const seconds = ref(0)
+const isRunning = ref(false)
+let interval = null
+
+const borderOptions = [
+  ['rounded-t-full','bg-cyan-500', 'shadow-cyan-500/50'],
+  ['rounded-s-full','bg-red-500', 'shadow-red-500/50'],
+  ['rounded-e-full','bg-yellow-500', 'shadow-yellow-500/50'],
+  ['rounded-b-full','bg-purple-500', 'shadow-purple-500/50'],
+];
+
+const borderClass = ref(borderOptions[0])
+
+const toggleBorder = (index) =>{
+  borderClass.value = borderOptions[index];
+}
+
+const formattedTime = computed(() => {
+  const mins = String(Math.floor(seconds.value / 60)).padStart(2, '0');
+  const secs = String(seconds.value % 60).padStart(2, '0');
+  return `${mins}:${secs}`
+})
+
+const start = () => {
+  if (isRunning.value) return
+  isRunning.value = true
+  interval = setInterval(() => {
+    seconds.value++;
+    if(seconds.value === 10){
+      borderClass.value = borderOptions[0];
+    }else if(seconds.value === 20){
+      borderClass.value = borderOptions[1];
+    }else if(seconds.value === 30){
+      borderClass.value = borderOptions[2];
+    }else if(seconds.value === 40){
+      borderClass.value = borderOptions[3];
+    }
+  }, 1000)
+}
+
+const pause = () => {
+  isRunning.value = false
+  clearInterval(interval)
+}
+
+const reset = () => {
+  pause()
+  seconds.value = 0
+}
+</script>
+
+<style scoped>
+/* Optional: Add a smooth transition to the timer badge */
+/* span {
+  transition: background-color 5s ease;
+} */
 </style>

@@ -9,13 +9,10 @@
             <nav class="space-x-4">
                 <!-- <router-link class="text-gray-600 hover:text-emerald-600" to="/" >Home</router-link> -->
                 <router-link class="text-gray-600 hover:text-emerald-600" to="/">Flashcard</router-link>
-                <router-link class="text-gray-600 hover:text-emerald-600" to="/readtimetracker">ReadTime</router-link>
+                <router-link class="text-gray-600 hover:text-emerald-600" to="/readtimetracker">Read Time</router-link>
             </nav>
         </div>
     </header>
-    <main class="p-4">
-    <router-view />
-  </main>
 </template>
 
 <style>
