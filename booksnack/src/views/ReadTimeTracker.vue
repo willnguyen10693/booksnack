@@ -1,18 +1,20 @@
 <template>
-  <div class="w-300 h-160 mx-auto flex flex-row justify-center items-center box-border shadow-xl shadow-cyan-500/50 transition-all duration-2000 ease-in-out"
-      :class="[borderClass]">
-    <div class="flex flex-col justify-center items-center">
-      <span class="text-9xl"> {{ formattedTime }}</span>
+  <div>
+      <div class="w-100 h-150 mx-auto flex flex-col justify-center rounded-bl-full items-center box-border shadow-xl shadow-cyan-500/50 transition-all duration-2000 ease-in-out"
+        :class="[borderClass]">
+      <div>
+        <span class="text-7xl"> {{ formattedTime }}</span>
+      </div>
+      <div class="flex flex-col">
+        <!-- <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(0)">Start</button>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(1)">Pause</button>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(2)">Start</button>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(3)">Pause</button> -->
+        <button @click="start" :disabled="isRunning">Start</button>
+        <button @click="pause" :disabled="!isRunning">Pause</button>
+        <button @click="reset">Reset</button>
     </div>
-  </div>
-  <div class="flex flex-col p-2 w-100 h-auto mx-auto">
-      <!-- <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(0)">Start</button>
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(1)">Pause</button>
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(2)">Start</button>
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded m-1 cursor-pointer" @click="toggleBorder(3)">Pause</button> -->
-      <button @click="start" :disabled="isRunning">Start</button>
-      <button @click="pause" :disabled="!isRunning">Pause</button>
-      <button @click="reset">Reset</button>
+    </div>
   </div>
 </template>
 
