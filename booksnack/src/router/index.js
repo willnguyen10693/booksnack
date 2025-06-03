@@ -1,12 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home.vue';
-import ReadTimeTracker from '@/views/ReadTimeTracker.vue';
-import FlashCard from '@/views/FlashCard.vue';
+import bookSnacks from '@/views/bookSnacks.vue';
 
 const routes = [
-    // { path: '/', name: 'Home', component: Home },
-    { path: '/readtimetracker', name: 'readtimetracker', component: ReadTimeTracker },
-    { path: '/', name: 'Flashcard', component: FlashCard},
+    { path: '/', name: 'booksnacks', component: bookSnacks },
 ];
 
 

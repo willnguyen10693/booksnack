@@ -1,17 +1,24 @@
 <script setup>
-    import myLogo from '@/assets/logo-wn-1.png';
+    import myLogo from '@/assets/booksnack-logo.png';
 </script>
 
 <template>
-    <header class="bg-white shadow-md">
-        <div class="max-w-full mx-auto px-4 py-4 flex justify-between items-center">
-            <img class="w-50 h-auto" :src="myLogo" alt="This logo is not available">
-            <nav class="space-x-4">
-                <!-- <router-link class="text-gray-600 hover:text-emerald-600" to="/" >Home</router-link> -->
-                <router-link class="text-gray-600 hover:text-emerald-600" to="/">Flashcard</router-link>
-                <router-link class="text-gray-600 hover:text-emerald-600" to="/readtimetracker">Read Time</router-link>
-            </nav>
+    <header>
+      <nav class="navbar bg-body-tertiary shadow">
+        <div class="container-fluid">
+          <a class="navbar-brand">BookSnack</a>
+          <div class="dropdown shadow rounded-circle">
+            <button style="width: 60px; height:60px" class="btn btn-secondary rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu" style="margin-left: -120px;">
+              <li><a class="dropdown-item" href="#">Log In</a></li>
+              <li><a class="dropdown-item" href="#">Log Out</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+            </ul>
+          </div>
         </div>
+      </nav>
     </header>
 </template>
 
